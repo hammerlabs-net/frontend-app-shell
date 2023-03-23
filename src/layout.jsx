@@ -27,6 +27,8 @@ export const ErrorInfo = props => (
 
 export const Layout = ({ children }) => (
       <div className="app-container">
+        <h1>Warning</h1>
+        <p>You are using an unsupported pageLayout. Please specificy your</p>
         {children}
       </div>
 )
