@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+
 import { SwitchErrorInfo } from 'piral-core';
 
 export const errors = {
@@ -13,16 +15,18 @@ export const errors = {
   ),
 };
 
-export const layout = {
-  ErrorInfo: props => (
+export const ErrorInfo = props => (
+  <>
     <div>
       <h1>Error</h1>
       <SwitchErrorInfo {...props} />
     </div>
-  ),
-  Layout: ({ children }) => (
-    <div>
-      <div className="container">{children}</div>
-    </div>
-  ),
-};
+  </>
+);
+
+
+export const Layout = ({ children }) => (
+      <div className="app-container">
+        {children}
+      </div>
+)

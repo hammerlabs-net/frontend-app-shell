@@ -5,13 +5,25 @@
   "keywords": [
     "piral"
   ],
+  "browserslist": [
+    "extends @edx/browserslist-config"
+  ],
   "dependencies": {
-    "piral-core": "0.15.8",
+    "@babel/polyfill": "^7.12.1",
+    "@edx/brand": "npm:@edx/brand-openedx@1.2.0",
+    "@edx/frontend-component-footer": "^11.6.3",
+    "@edx/frontend-component-header": "^3.6.4",
+    "@edx/frontend-platform": "^3.6.0",
     "piral-base": "0.15.8",
-    "react": "^18",
-    "react-dom": "^18",
+    "piral-core": "0.15.8",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-helmet": "^6.1.0",
+    "react-redux": "7.2.9",
     "react-router": "^5",
-    "react-router-dom": "^5"
+    "react-router-dom": "^5",
+    "redux": "4.2.1",
+    "webpack-merge": "^5.8.0"
   },
   "scripts": {
     "start": "piral debug",
@@ -24,11 +36,18 @@
     "imports": {},
     "inherit": [
       "piral-base",
-      "piral-core"
+      "piral-core",
+      "react",
+      "react-dom",
+      "react-router",
+      "react-router-dom"
     ]
   },
   "devDependencies": {
+    "@edx/browserslist-config": "^1.1.1",
+    "@edx/frontend-build": "^12.6.1",
     "piral-cli": "0.15.8",
+    "piral-cli-dotenv": "^0.2.0",
     "piral-cli-webpack5": "0.15.8"
   }
 }
