@@ -7,5 +7,8 @@
 import HeaderPilet from './header';
 import FooterPilet from './footer';
 import LayoutPilet from './layout';
+import AccountMFEPilet, { reducer as accountReducer, saga as accountSaga } from '@edx/frontend-app-account'
 
-export const availablePilets = [ HeaderPilet, FooterPilet, LayoutPilet ];
+export const availablePilets = [ HeaderPilet, FooterPilet, AccountMFEPilet, LayoutPilet ];
+export const reducers = [accountReducer];
+export const sagas = [accountSaga];

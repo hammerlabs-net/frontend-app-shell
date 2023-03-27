@@ -13,7 +13,8 @@ import { subscribe, initialize, APP_READY, mergeConfig, } from '@edx/frontend-pl
 import { messages as headerMessages } from '@edx/frontend-component-header';
 import { AppProvider } from '@edx/frontend-platform/react';
 
-import { availablePilets } from './pilets';
+import { availablePilets, reducers, sagas } from './pilets';
+import configureStore from './data/configureStore';
 
 // change to your feed URL here (either using feed.piral.cloud or your own service)
 const feedUrl = 'https://feed.piral.cloud/api/v1/pilet/empty';
@@ -32,7 +33,7 @@ subscribe(APP_READY, () => {
   });
 
   ReactDOM.render(
-    <AppProvider>
+    <AppProvider store={configureStore({}, reducers, sagas)}>
       <Piral instance={instance} />
     </AppProvider>,
     document.querySelector('#app')
