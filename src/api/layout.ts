@@ -1,10 +1,20 @@
-import { withApi } from 'piral-core';
+import { ComponentType } from 'react';
+import { AnyComponent, ComponentsState, PiralPlugin, withApi } from 'piral-core';
+
+type GenericComponents<T> = Partial<
+  {
+    [P in keyof T]: T[P] extends ComponentType<infer C> ? AnyComponent<C> : T[P];
+  }
+>;
+
+interface LayoutApi {
+  setLayout(components: GenericComponents<ComponentsState>, errorComponents: GenericComponents<ComponentsState>): void;
+}
 
 /**
  * Plugin function to allow Layouts to be set by Pilets. 
- * @returns 
  */
-export function createLayoutApi() {
+export function createLayoutApi(): PiralPlugin<LayoutApi> {
   return (context) => (api) => ({
     setLayout(newComponents, newErrors) {
       context.dispatch((state) => {
