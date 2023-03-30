@@ -11,7 +11,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@edx/brand": "npm:@edx/brand-openedx@1.2.0",
-    "@edx/frontend-app-account": "file:../frontend-app-account",
+    "@edx/frontend-app-account": "1.0.0",
     "@edx/frontend-component-footer": "^11.6.3",
     "@edx/frontend-component-header": "^3.6.4",
     "@edx/frontend-platform": "3.6.0",
