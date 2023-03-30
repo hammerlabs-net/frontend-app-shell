@@ -19,7 +19,7 @@ import { messages as accountMessages } from '@edx/frontend-app-account';
 import { pilets } from './pilets';
 
 // Redux
-import { compose, applyMiddleware, createStore } from 'redux-dynamic-modules';
+import { applyMiddleware, createStore } from 'redux-dynamic-modules';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { createLogger } from 'redux-logger';

@@ -17,15 +17,16 @@ const Head = () => (
   </Helmet>
 );
 
-
 const OpenEdxLayout = ({ children, Header, Footer}) => (
   <div>
     <Head />
-    <Header />
-    <div className="app-container">
-      {children}
+    <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>
+      <Header />
+      <main className="flex-grow-1">
+        {children}
+      </main>
+      <Footer />
     </div>
-    <Footer />
   </div>
 
 );
@@ -41,18 +42,12 @@ export const OpenEdxErrorInfo = (props) => (
 );
 const Home = () => (
   <div>
-    <p>This is the home page@</p>
-    <p>Go to <Link to="/2">Page 2</Link>.</p>
-    <p>Go to <Link to="/null">Not Found</Link>.</p>
+    <p>This is the Shell Home Page at '/'. Ideally a pilet takes this over one day</p>
+    <p>Go to <Link to="/account">Account MFE</Link>.</p>
+    <p>Go to <Link to="/learning">Learning MFE (coming soon)</Link>.</p>
   </div>
 );
 
-const Page2 = () => (
-  <div>
-    <p>This is page 2</p>
-    <p>Go to back <Link to="/">Home</Link>.</p>
-  </div>
-);
 
 const errors = {
   not_found: () => (
