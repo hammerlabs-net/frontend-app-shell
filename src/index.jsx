@@ -14,74 +14,48 @@ import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
 // the next two are hacks. We need an API for pilets to register messages - probably after initialize :)
 import { messages as headerMessages } from '@edx/frontend-component-header';
 import { messages as accountMessages } from '@edx/frontend-app-account';
-
+import { messages as learningMessages } from '@edx/frontend-app-learning';
 // Pilets
-import { pilets } from './pilets';
+import { pilets as availablePilets } from './pilets';
 
 // Redux
-import { applyMiddleware, createStore } from 'redux-dynamic-modules';
+import { applyMiddleware } from 'redux';
+import { createStore } from 'redux-dynamic-modules';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { createLogger } from 'redux-logger';
 import { getSagaExtension } from 'redux-dynamic-modules-saga';
 import { getThunkExtension } from 'redux-dynamic-modules-thunk';
 
-const loggerMiddleware = () => {
-  return composeWithDevTools(applyMiddleware(createLogger({
+const loggerMiddleware =  composeWithDevTools(applyMiddleware(createLogger({
     collapsed: true,
-  })))
-};
+  })));
 
-const ErrorInfo = props => (
-  <>
-    <div>
-      <h1>Error</h1>
-      <p>{props.error.message}</p>
-    </div>
-  </>
-);
+const store =  createStore({
+  extensions: [
+    getSagaExtension(),
+    getThunkExtension(),
+  ],
+  loggerMiddleware,
+});
+
+
 
 subscribe(APP_READY, () => {
-  const store =  createStore({
-    extensions: [
-      getSagaExtension(),
-      getThunkExtension(),
+  const instance = createInstance({
+    state: {
+      errorComponents: {},
+      components: {} 
+    },
+    plugins: [
+      createLayoutApi(),
     ],
-    loggerMiddleware,
+    availablePilets,
   });
-
-  function createApp(availablePilets) {
-    try {
-      const instance = createInstance({
-        state: {
-          errorComponents: {},
-          components: {} 
-        },
-        plugins: [
-          createLayoutApi(),
-        ],
-        availablePilets,
-      });
-
-      return <Piral instance={instance} />;
-    } catch (error) {
-      return <ErrorInfo type="loading" error={error} />;
-    }
-  }
-
-  function App() {
-    const [app, setApp] = React.useState(null);
-    React.useEffect(() => {
-      if (!app) {
-        setApp(createApp(pilets));
-      }
-    }, [pilets, app]);
-    return app || <></>;
-  }
 
   ReactDOM.render(
     <AppProvider store={ store }>
-      <App />
+      <Piral instance={instance} />
     </AppProvider>,
     document.querySelector('#app')
   );
@@ -94,7 +68,8 @@ subscribe(APP_INIT_ERROR, (error) => {
 initialize({
   messages: [
     headerMessages,
-    accountMessages
+    accountMessages,
+    learningMessages
   ],
   requireAuthenticatedUser: false,
   hydrateAuthenticatedUser: true,
@@ -109,6 +84,25 @@ initialize({
         ENABLE_DOB_UPDATE: (process.env.ENABLE_DOB_UPDATE || false),
         MARKETING_EMAILS_OPT_IN: (process.env.MARKETING_EMAILS_OPT_IN || false),
         PASSWORD_RESET_SUPPORT_LINK: process.env.PASSWORD_RESET_SUPPORT_LINK,
+        CONTACT_URL: process.env.CONTACT_URL || null,
+        CREDENTIALS_BASE_URL: process.env.CREDENTIALS_BASE_URL || null,
+        CREDIT_HELP_LINK_URL: process.env.CREDIT_HELP_LINK_URL || null,
+        DISCUSSIONS_MFE_BASE_URL: process.env.DISCUSSIONS_MFE_BASE_URL || null,
+        ENTERPRISE_LEARNER_PORTAL_HOSTNAME: process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME || null,
+        ENABLE_JUMPNAV: process.env.ENABLE_JUMPNAV || null,
+        ENABLE_NOTICES: process.env.ENABLE_NOTICES || null,
+        INSIGHTS_BASE_URL: process.env.INSIGHTS_BASE_URL || null,
+        SEARCH_CATALOG_URL: process.env.SEARCH_CATALOG_URL || null,
+        SOCIAL_UTM_MILESTONE_CAMPAIGN: process.env.SOCIAL_UTM_MILESTONE_CAMPAIGN || null,
+        STUDIO_BASE_URL: process.env.STUDIO_BASE_URL || null,
+        SUPPORT_URL_CALCULATOR_MATH: process.env.SUPPORT_URL_CALCULATOR_MATH || null,
+        SUPPORT_URL_ID_VERIFICATION: process.env.SUPPORT_URL_ID_VERIFICATION || null,
+        SUPPORT_URL_VERIFIED_CERTIFICATE: process.env.SUPPORT_URL_VERIFIED_CERTIFICATE || null,
+        TERMS_OF_SERVICE_URL: process.env.TERMS_OF_SERVICE_URL || null,
+        TWITTER_HASHTAG: process.env.TWITTER_HASHTAG || null,
+        TWITTER_URL: process.env.TWITTER_URL || null,
+        LEGACY_THEME_NAME: process.env.LEGACY_THEME_NAME || null,
+        EXAMS_BASE_URL: process.env.EXAMS_BASE_URL || null,
       }, 'App loadConfig override handler');
     },
   },

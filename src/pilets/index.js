@@ -7,6 +7,7 @@
 import HeaderPilet from './header';
 import FooterPilet from './footer';
 import LayoutPilet from './layout';
-import AccountMFEPilet from '@edx/frontend-app-account'
+import AccountMFEPilet from '@edx/frontend-app-account';
+import LearningMFEPilet from '@edx/frontend-app-learning';
 
-export const pilets = [ HeaderPilet, FooterPilet, AccountMFEPilet, LayoutPilet ];
+export const pilets = [ HeaderPilet, FooterPilet, AccountMFEPilet, LearningMFEPilet, LayoutPilet ];
