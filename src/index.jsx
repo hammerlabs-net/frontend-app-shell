@@ -57,7 +57,7 @@ subscribe(APP_READY, () => {
     <AppProvider store={ store }>
       <Piral instance={instance} />
     </AppProvider>,
-    document.querySelector('#app')
+    document.querySelector('#root')
   );
 });
 

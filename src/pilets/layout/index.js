@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link, Redirect } from 'react-router-dom'; 
 
 import { Helmet } from 'react-helmet';
 import { getConfig } from '@edx/frontend-platform';
 
 import { SwitchErrorInfo } from 'piral-core';
 
+import './style.scss'
 
 
 const Head = () => (
@@ -44,7 +45,7 @@ const Home = () => (
   <div>
     <p>This is the Shell Home Page at '/'. Ideally a pilet takes this over one day</p>
     <p>Go to <Link to="/account">Account MFE</Link>.</p>
-    <p>Go to <Link to="/learning">Learning MFE (coming soon)</Link>.</p>
+    <p>Go to <Link to="/learning">Learning MFE</Link>.</p>
   </div>
 );
 
@@ -87,8 +88,8 @@ export default {
       <Home /> 
     ));
 
-    piralApi.registerPage('/2', () => (
-      <Page2 />
+    piralApi.registerPage('/dashboard', () => (
+      <Home />
     ));
 
   },
