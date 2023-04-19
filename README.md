@@ -1,13 +1,14 @@
 # frontend-app-shell
 
-The `frontend-app-shell` repository is a proof of concept for decomposing Open edX Micro Frontends (MFEs) into pilets that can be loaded into a [Piral](https://piral.io) shell service. This project requires two additional projects to be downloaded, which are forks of current Open edX MFEs that show the conversion process for current MFEs to pilets.
+The `frontend-app-shell` repository is a proof of concept for decomposing Open edX Micro Frontends (MFEs) into pilets that can be loaded into a [Piral](https://piral.io) shell service. This project requires three additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and Open edX component project to show single page routing between MFEs
 
 - [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account-piral)
 - [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning-piral)
+- [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header-piral)
 
 ## Running
 
-Clone all three repositories to a common parent directory. After cloning, switch both MFE forks to their respective `pilet-convert` branches.
+Clone all four repositories to a common parent directory. After cloning, switch all the forked repositories above to their respective `pilet-convert` branches.
 
 1. Run `npm install && npm run build` in both MFE forked projects.
 2. Add a file `module.config.js` to the root of this project with the following content:
@@ -23,6 +24,11 @@ module.exports = {
     {
       moduleName: '@edx/frontend-app-learning',
       dir: '../frontend-app-learning-piral', 
+      dist: 'src',
+    },
+    {
+      moduleName: '@edx/frontend-component-header',
+      dir: '../frontend-component-header-piral', 
       dist: 'src',
     }
   ]
@@ -44,6 +50,6 @@ This proof of concept demonstrates some key features of Piral and how the framew
 5. The shell centralized creation of the Redux datastore by utilizing the [Redux Dynamic Modules](https://redux-dynamic-modules.js.org/#/) library. In the MFE projects, note how the changes to convert the projects into pilets removed the code to create the store. The `pilet.jsx` instead loads the reducers, sagas, and thunks using `<DynamicModuleLoader/>` provided by Redux Dynamic Modules libraries.
 6. Layout for the Piral shell demonstrates some of the key capabilities of Piral to simplify frontend development, standardize UI and UX, and smooth the transition between MFEs.
     * The shell implements an API extension to allow the layout to be defined by a pilet (see notes [here](https://docs.piral.io/reference/documentation/C01-components)). This allows different pilets to be created to provide different layouts for different deployments of the platform, without requiring any changes to existing MFEs.
-    * The example pilet responsible for layout uses pilet ["extensions"]([https://docs.piral.io/concepts/core-api/07-extension](https://docs.piral.io/guidelines/tutorials/24-extension-patterns)) to provide UI "slots" for components such as headers and footers and other shared layout. In this POC, both Open edX [frontend-component-header](https://github.com/openedx/frontend-component-header) and [frontend-component-footer](https://github.com/openedx/frontend-component-footer) are loaded as extension pilets to fill slots defined by the layout pilet. Note how both are wrapped by the components in `./src/pilets/`.
+    * The example pilet responsible for layout uses pilet ["extensions"]([https://docs.piral.io/concepts/core-api/07-extension](https://docs.piral.io/guidelines/tutorials/24-extension-patterns)) to provide UI "slots" for components such as headers and footers and other shared layout. In this POC, both Open edX [frontend-component-header](https://github.com/openedx/frontend-component-header) and [frontend-component-footer](https://github.com/openedx/frontend-component-footer) are loaded as extension pilets to fill slots defined by the layout pilet. Note how the Footer component is wrapped by the components in `./src/pilets/footer`. The Header component is wrapped in the same manner inside the forked component project by `Pilet.jsx`. 
     * In the forked MFE projects, note how `pilet.jsx` is essentially a refactoring of `index.jsx` removing the wrappers for `frontend-platform` `AppProvider`, headers, and footers. This pattern can be extended to other components including modals, notifications, and other UI handlers.
 
