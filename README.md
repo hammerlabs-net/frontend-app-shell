@@ -6,7 +6,7 @@ Piral Shell for openEdx. This repository is a proof of concept for decomposing o
 [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning-piral/tree/pilet-convert)
 
 ## Running
-Clone all three repositories to a common parent directory. 
+Clone all three repositories to a common parent directory. After cloning switch both MFE forks to their respective `pilet-convert` branches. 
 
 1) run `npm install && npm run build` in both MFE forked projects.
 2) add the a file `module.config.js` to the root of this project with the following content:
