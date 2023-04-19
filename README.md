@@ -29,8 +29,7 @@ module.exports = {
 }
 ```
 3. Run `npm install` on this project.
-4. *(optional)* To develop and debug locally, run `npm link ../frontend-app-account-piral ../frontend-app-learning-piral` (note that this step needs to be repeated after every time `npm install` is run).
-5. Run `npm start`.
+4. Run `npm start`.
 
 ## Details
 
