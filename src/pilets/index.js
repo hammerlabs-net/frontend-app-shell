@@ -6,8 +6,16 @@ import { Pilet as HeaderPilet } from '@edx/frontend-component-header';
 //import { Pilet as FooterPilet } from '@edx/frontend-component-footer';
 //import HeaderPilet from './header';
 import FooterPilet from './footer';
-import LayoutPilet from './layout';
+import RegLayoutPilet from './layout';
+import AltLayoutPilet from './altLayout';
+
 import AccountMFEPilet from '@edx/frontend-app-account';
 import LearningMFEPilet from '@edx/frontend-app-learning';
 
-export const pilets = [ HeaderPilet, FooterPilet, AccountMFEPilet, LearningMFEPilet, LayoutPilet ];
+const queryParams = new URLSearchParams(window.location.search);
+
+const useAlt = queryParams.get("alt");
+
+const layoutPilet = useAlt ? AltLayoutPilet : RegLayoutPilet;
+
+export const pilets = [ HeaderPilet, FooterPilet, AccountMFEPilet, LearningMFEPilet, layoutPilet ];
