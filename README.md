@@ -1,10 +1,11 @@
 # frontend-app-shell
 
-The `frontend-app-shell` repository is a proof of concept for decomposing Open edX Micro Frontends (MFEs) into pilets that can be loaded into a [Piral](https://piral.io) shell service. This project requires three additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and Open edX component project to show single page routing between MFEs
+The `frontend-app-shell` repository is a proof of concept for decomposing Open edX Micro Frontends (MFEs) into pilets that can be loaded into a [Piral](https://piral.io) shell service. This project requires four additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and a fork of an Open edX component project to show single page routing between MFEs. It also has a temporary local dependency on frontend-platform
 
 - [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account-piral)
 - [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning-piral)
 - [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header-piral)
+- [Frontend Platform](https://github.com/openedx/frontend-platform)
 
 ## Running
 ### tl;dr:
@@ -49,8 +50,9 @@ npm install && npm start
 ### Detailed instructions
 Clone all four repositories to a common parent directory. After cloning, switch all the forked repositories above to their respective `pilet-convert` branches.
 
-1. Run `npm install && npm run build` in both MFE forked projects.
-2. Add a file `module.config.js` to the root of this project with the following content:
+1. Run `npm install && npm run build` in all three MFE forked projects.
+2. Run `npm istall` in frontend-platform
+3. Add a file `module.config.js` to the root of this project with the following content:
 
 ```
 module.exports = {
@@ -73,9 +75,9 @@ module.exports = {
   ]
 }
 ```
-3. Run `npm install` on this project.
-4. Run `npm start`.
-5. Access the running instance at http://localhost:1234/
+4. Run `npm install` on this project.
+5. Run `npm start`.
+6. Access the running instance at http://localhost:1234/
 
 ## Details
 
