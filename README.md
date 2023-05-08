@@ -7,7 +7,46 @@ The `frontend-app-shell` repository is a proof of concept for decomposing Open e
 - [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header-piral)
 
 ## Running
-
+### tl;dr:
+Run the following shell commands in an empty directory:
+```
+git clone https://github.com/hammerlabs-net/frontend-app-account-piral.git && cd frontend-app-account-piral/
+git checkout pilet-convert && npm install && npm run build && cd ..
+git clone https://github.com/hammerlabs-net/frontend-app-learning-piral.git && cd frontend-app-learning-piral/
+git checkout pilet-convert && npm install && npm run build && cd ..
+git clone https://github.com/hammerlabs-net/frontend-component-header-piral.git && cd frontend-component-header-piral/
+git checkout pilet-convert && npm install && npm run build && cd ..
+git clone https://github.com/openedx/frontend-platform.git && cd frontend-platform
+npm install && cd ..
+git clone https://github.com/hammerlabs-net/frontend-app-shell.git && cd frontend-app-shell
+echo "
+module.exports = {
+  localModules: [
+    {
+      moduleName: '@edx/frontend-app-account',
+      dir: '../frontend-app-account-piral', 
+      dist: 'src',
+    },
+    {
+      moduleName: '@edx/frontend-platform',
+      dir: '../frontend-platform', 
+      dist: 'src',
+    },
+    {
+      moduleName: '@edx/frontend-app-learning',
+      dir: '../frontend-app-learning-piral', 
+      dist: 'src',
+    },
+    {
+      moduleName: '@edx/frontend-component-header',
+      dir: '../frontend-component-header-piral', 
+      dist: 'src',
+    }
+  ]
+}" > module.config.js
+npm install && npm start
+```
+### Detailed instructions
 Clone all four repositories to a common parent directory. After cloning, switch all the forked repositories above to their respective `pilet-convert` branches.
 
 1. Run `npm install && npm run build` in both MFE forked projects.
@@ -36,6 +75,7 @@ module.exports = {
 ```
 3. Run `npm install` on this project.
 4. Run `npm start`.
+5. Access the running instance at http://localhost:1234/
 
 ## Details
 
@@ -49,7 +89,7 @@ This proof of concept demonstrates some key features of Piral and how the framew
 4. The forked MFE projects were quick "hacks" to demonstrate how simply an existing MFE can be converted into a pilet. Noteworthy are the migration of core dependencies into peer dependencies now provided by the shell, the new build target for `npm run` based on the build target of `frontend-component-xxx` projects, and the changes to `index.jsx` and `pilet.jsx`, which change how the MFE is rendered. The next features discuss the important points to note about the important differences between `pilet.jsx` and `index.jsx`.
 5. The shell centralized creation of the Redux datastore by utilizing the [Redux Dynamic Modules](https://redux-dynamic-modules.js.org/#/) library. In the MFE projects, note how the changes to convert the projects into pilets removed the code to create the store. The `pilet.jsx` instead loads the reducers, sagas, and thunks using `<DynamicModuleLoader/>` provided by Redux Dynamic Modules libraries.
 6. Layout for the Piral shell demonstrates some of the key capabilities of Piral to simplify frontend development, standardize UI and UX, and smooth the transition between MFEs.
-    * The shell implements an API extension to allow the layout to be defined by a pilet (see notes [here](https://docs.piral.io/reference/documentation/C01-components)). This allows different pilets to be created to provide different layouts for different deployments of the platform, without requiring any changes to existing MFEs.
+    * The shell implements an API extension to allow the layout to be defined by a pilet (see notes [here](https://docs.piral.io/reference/documentation/C01-components)). This allows different pilets to be created to provide different layouts for different deployments of the platform, without requiring any changes to existing MFEs. You can see an example of this in action by using the URL search query: `?alt=true`. A different pilet configuration with an alternative layout pilet with a sidebar will be loaded.
     * The example pilet responsible for layout uses pilet ["extensions"]([https://docs.piral.io/concepts/core-api/07-extension](https://docs.piral.io/guidelines/tutorials/24-extension-patterns)) to provide UI "slots" for components such as headers and footers and other shared layout. In this POC, both Open edX [frontend-component-header](https://github.com/openedx/frontend-component-header) and [frontend-component-footer](https://github.com/openedx/frontend-component-footer) are loaded as extension pilets to fill slots defined by the layout pilet. Note how the Footer component is wrapped by the components in `./src/pilets/footer`. The Header component is wrapped in the same manner inside the forked component project by `Pilet.jsx`. 
     * In the forked MFE projects, note how `pilet.jsx` is essentially a refactoring of `index.jsx` removing the wrappers for `frontend-platform` `AppProvider`, headers, and footers. This pattern can be extended to other components including modals, notifications, and other UI handlers.
 
