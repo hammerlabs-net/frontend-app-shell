@@ -62,7 +62,10 @@ subscribe(APP_READY, () => {
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
-  ReactDOM.render(<ErrorPage message={error.message} />, document.getElementById('#app'));
+  ReactDOM.render(
+    <ErrorPage locale='en-us' message={error.message} />, 
+    document.querySelector('#root')
+  );
 });
 
 initialize({
