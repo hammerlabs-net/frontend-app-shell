@@ -1,11 +1,11 @@
 # frontend-app-shell
 
-The `frontend-app-shell` repository is a proof of concept for decomposing Open edX Micro Frontends (MFEs) into pilets that can be loaded into a [Piral](https://piral.io) shell service. This project requires four additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and a fork of an Open edX component project to show single page routing between MFEs. It also has a temporary local dependency on frontend-platform
+The `frontend-app-shell` repository is a proof of concept for decomposing Open edX Micro Frontends (MFEs) into pilets that can be loaded into a [Piral](https://piral.io) shell service. This project requires four additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and a fork of an Open edX component project to show single page routing between MFEs. It also depends on a Fork of Open edX frontend-platform
 
 - [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account)
 - [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning)
 - [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header)
-- [Frontend Platform](https://github.com/hammerlabs-net/frontend-platform)
+- [Frontend Platform Fork](https://github.com/hammerlabs-net/frontend-platform)
 
 ## Running
 ### tl;dr:
