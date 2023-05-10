@@ -11,10 +11,10 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@edx/brand": "npm:@edx/brand-openedx@1.2.0",
-    "@edx/frontend-app-account": "file:../frontend-app-account-piral",
-    "@edx/frontend-app-learning": "file:../frontend-app-learning-piral",
+    "@edx/frontend-app-account": "file:../frontend-app-account",
+    "@edx/frontend-app-learning": "file:../frontend-app-learning",
     "@edx/frontend-component-footer": "^11.6.3",
-    "@edx/frontend-component-header": "file:../frontend-component-header-piral",
+    "@edx/frontend-component-header": "file:../frontend-component-header",
     "@edx/frontend-platform": "file:../frontend-platform",
     "@edx/paragon": "^20.28.5",
     "piral-base": "0.15.8",
