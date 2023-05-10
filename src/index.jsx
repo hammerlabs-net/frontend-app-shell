@@ -6,15 +6,12 @@ import ReactDOM from 'react-dom';
 
 // Piral
 import { createInstance, Piral } from 'piral-core';
-import { createLayoutApi } from './api/layout';
+import { createLayoutApi, createPlatformApi } from './api';
 
 // OpenEdx
 import { subscribe, initialize, APP_READY, APP_INIT_ERROR, mergeConfig, } from '@edx/frontend-platform';
 import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
-// the next two are hacks. We need an API for pilets to register messages - probably after initialize :)
-import { messages as headerMessages } from '@edx/frontend-component-header';
-import { messages as accountMessages } from '@edx/frontend-app-account';
-import { messages as learningMessages } from '@edx/frontend-app-learning';
+
 // Pilets
 import { pilets as availablePilets } from './pilets';
 
@@ -27,21 +24,20 @@ import { createLogger } from 'redux-logger';
 import { getSagaExtension } from 'redux-dynamic-modules-saga';
 import { getThunkExtension } from 'redux-dynamic-modules-thunk';
 
-const loggerMiddleware =  composeWithDevTools(applyMiddleware(createLogger({
-    collapsed: true,
-  })));
-
-const store =  createStore({
-  extensions: [
-    getSagaExtension(),
-    getThunkExtension(),
-  ],
-  loggerMiddleware,
-});
-
-
-
+// Open edX APP_READY handler. 
 subscribe(APP_READY, () => {
+  
+  /* Create The Piral instance.
+   * 
+   * We use and empty state instance as layout and error components 
+   * are handled in the LayoutApi plugin for the Piral API. This demonstrates the ability
+   * to use different pilets to control the UX Layout and other components
+   * of the user interface.
+   * 
+   * The pilets are loaded statically for this POC. Piral typically 
+   * recommends a "feed service" that can load pilets dynamically at
+   * runtime. 
+   */
   const instance = createInstance({
     state: {
       errorComponents: {},
@@ -49,10 +45,31 @@ subscribe(APP_READY, () => {
     },
     plugins: [
       createLayoutApi(),
+      createPlatformApi(),
     ],
     availablePilets,
   });
+  /* Configure Redux
+   *
+   * In exisitng MFEs the Redux store is configured at creation time as the 
+   * reducers and sagas are known to the application before hand. In the Piral
+   * context, the shell is not aware of what reducers and sagas must be loaded.
+   * To support this, this POC uses Reduc Dynamic Modules in order to load 
+   * reducers and sagas when pilets's are loaded into the shell.
+   */
+  const loggerMiddleware =  composeWithDevTools(applyMiddleware(createLogger({
+    collapsed: true,
+  })));
 
+  const store =  createStore({
+    extensions: [
+      getSagaExtension(),
+      getThunkExtension(),
+    ],
+    loggerMiddleware,
+  });
+
+  /* Render the Piral Instance inside the Open edX AppProvider */ 
   ReactDOM.render(
     <AppProvider store={ store }>
       <Piral instance={instance} />
@@ -61,6 +78,7 @@ subscribe(APP_READY, () => {
   );
 });
 
+// Open edX APP_INIT_ERROR handler. 
 subscribe(APP_INIT_ERROR, (error) => {
   ReactDOM.render(
     <ErrorPage locale='en-us' message={error.message} />, 
@@ -68,45 +86,19 @@ subscribe(APP_INIT_ERROR, (error) => {
   );
 });
 
+// Open edX frontend-initialization. 
 initialize({
-  messages: [
-    headerMessages,
-    accountMessages,
-    learningMessages
-  ],
+  /* Messages and Config:
+   *
+   * Similar to reducers and sagas, MFE specific internationalization messages and 
+   * config are not available during shell initialization. The Piral instance uses
+   * an API extension to allow these to be merged into the internationalization
+   * modules while the MFE is initialized, which is now decoupled from
+   * the platform initialization. Frontend-platform has to expose some additional 
+   * endpoints for this to work
+   */
+  messages: [],
   requireAuthenticatedUser: false,
   hydrateAuthenticatedUser: true,
-  handlers: {
-    config: () => {
-      mergeConfig({
-        SUPPORT_URL: process.env.SUPPORT_URL,
-        COACHING_ENABLED: (process.env.COACHING_ENABLED || false),
-        ENABLE_DEMOGRAPHICS_COLLECTION: (process.env.ENABLE_DEMOGRAPHICS_COLLECTION || false),
-        DEMOGRAPHICS_BASE_URL: process.env.DEMOGRAPHICS_BASE_URL,
-        ENABLE_COPPA_COMPLIANCE: (process.env.ENABLE_COPPA_COMPLIANCE || false),
-        ENABLE_DOB_UPDATE: (process.env.ENABLE_DOB_UPDATE || false),
-        MARKETING_EMAILS_OPT_IN: (process.env.MARKETING_EMAILS_OPT_IN || false),
-        PASSWORD_RESET_SUPPORT_LINK: process.env.PASSWORD_RESET_SUPPORT_LINK,
-        CONTACT_URL: process.env.CONTACT_URL || null,
-        CREDENTIALS_BASE_URL: process.env.CREDENTIALS_BASE_URL || null,
-        CREDIT_HELP_LINK_URL: process.env.CREDIT_HELP_LINK_URL || null,
-        DISCUSSIONS_MFE_BASE_URL: process.env.DISCUSSIONS_MFE_BASE_URL || null,
-        ENTERPRISE_LEARNER_PORTAL_HOSTNAME: process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME || null,
-        ENABLE_JUMPNAV: process.env.ENABLE_JUMPNAV || null,
-        ENABLE_NOTICES: process.env.ENABLE_NOTICES || null,
-        INSIGHTS_BASE_URL: process.env.INSIGHTS_BASE_URL || null,
-        SEARCH_CATALOG_URL: process.env.SEARCH_CATALOG_URL || null,
-        SOCIAL_UTM_MILESTONE_CAMPAIGN: process.env.SOCIAL_UTM_MILESTONE_CAMPAIGN || null,
-        STUDIO_BASE_URL: process.env.STUDIO_BASE_URL || null,
-        SUPPORT_URL_CALCULATOR_MATH: process.env.SUPPORT_URL_CALCULATOR_MATH || null,
-        SUPPORT_URL_ID_VERIFICATION: process.env.SUPPORT_URL_ID_VERIFICATION || null,
-        SUPPORT_URL_VERIFIED_CERTIFICATE: process.env.SUPPORT_URL_VERIFIED_CERTIFICATE || null,
-        TERMS_OF_SERVICE_URL: process.env.TERMS_OF_SERVICE_URL || null,
-        TWITTER_HASHTAG: process.env.TWITTER_HASHTAG || null,
-        TWITTER_URL: process.env.TWITTER_URL || null,
-        LEGACY_THEME_NAME: process.env.LEGACY_THEME_NAME || null,
-        EXAMS_BASE_URL: process.env.EXAMS_BASE_URL || null,
-      }, 'App loadConfig override handler');
-    },
-  },
+  handlers: {},
 });
