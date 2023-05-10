@@ -2,22 +2,22 @@
 
 The `frontend-app-shell` repository is a proof of concept for decomposing Open edX Micro Frontends (MFEs) into pilets that can be loaded into a [Piral](https://piral.io) shell service. This project requires four additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and a fork of an Open edX component project to show single page routing between MFEs. It also has a temporary local dependency on frontend-platform
 
-- [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account-piral)
-- [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning-piral)
-- [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header-piral)
-- [Frontend Platform](https://github.com/openedx/frontend-platform)
+- [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account)
+- [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning)
+- [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header)
+- [Frontend Platform](https://github.com/hammerlabs-net/frontend-platform)
 
 ## Running
 ### tl;dr:
 Run the following shell commands in an empty directory:
 ```
-git clone https://github.com/hammerlabs-net/frontend-app-account-piral.git && cd frontend-app-account-piral/
+git clone https://github.com/hammerlabs-net/frontend-app-account.git && cd frontend-app-account/
 git checkout pilet-convert && npm install && npm run build && cd ..
-git clone https://github.com/hammerlabs-net/frontend-app-learning-piral.git && cd frontend-app-learning-piral/
+git clone https://github.com/hammerlabs-net/frontend-app-learning.git && cd frontend-app-learning/
 git checkout pilet-convert && npm install && npm run build && cd ..
-git clone https://github.com/hammerlabs-net/frontend-component-header-piral.git && cd frontend-component-header-piral/
+git clone https://github.com/hammerlabs-net/frontend-component-header.git && cd frontend-component-header/
 git checkout pilet-convert && npm install && npm run build && cd ..
-git clone https://github.com/openedx/frontend-platform.git && cd frontend-platform
+git clone https://github.com/hammerlabs-net/frontend-platform.git && cd frontend-platform
 npm install && cd ..
 git clone https://github.com/hammerlabs-net/frontend-app-shell.git && cd frontend-app-shell
 echo "
@@ -25,7 +25,7 @@ module.exports = {
   localModules: [
     {
       moduleName: '@edx/frontend-app-account',
-      dir: '../frontend-app-account-piral', 
+      dir: '../frontend-app-account', 
       dist: 'src',
     },
     {
@@ -35,12 +35,12 @@ module.exports = {
     },
     {
       moduleName: '@edx/frontend-app-learning',
-      dir: '../frontend-app-learning-piral', 
+      dir: '../frontend-app-learning', 
       dist: 'src',
     },
     {
       moduleName: '@edx/frontend-component-header',
-      dir: '../frontend-component-header-piral', 
+      dir: '../frontend-component-header', 
       dist: 'src',
     }
   ]
@@ -59,17 +59,22 @@ module.exports = {
   localModules: [
     {
       moduleName: '@edx/frontend-app-account',
-      dir: '../frontend-app-account-piral', 
+      dir: '../frontend-app-account', 
+      dist: 'src',
+    },
+    {
+      moduleName: '@edx/frontend-platform',
+      dir: '../frontend-platform', 
       dist: 'src',
     },
     {
       moduleName: '@edx/frontend-app-learning',
-      dir: '../frontend-app-learning-piral', 
+      dir: '../frontend-app-learning', 
       dist: 'src',
     },
     {
       moduleName: '@edx/frontend-component-header',
-      dir: '../frontend-component-header-piral', 
+      dir: '../frontend-component-header', 
       dist: 'src',
     }
   ]
