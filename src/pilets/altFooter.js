@@ -9,7 +9,7 @@ const piletSpec = {
   basePath: '/pilets',
   setup(piralApi) {
     piralApi.registerExtension('openedx-footer', () => (
-      <div align="center">
+      <div style={{textAlign:'center',backgroundColor:'grey',border:'5px solid red'}}>
         This is an alternative footer extension.
       </div>
     ));

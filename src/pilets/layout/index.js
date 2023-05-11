@@ -43,9 +43,19 @@ export const OpenEdxErrorInfo = (props) => (
 );
 const Home = () => (
   <div>
-    <p>This is the Shell Home Page at '/'. Ideally a pilet takes this over one day</p>
-    <p>Go to <Link to="/account">Account MFE</Link>.</p>
-    <p>Go to <Link to="/learning">Learning MFE</Link>.</p>
+    <p>
+      This is the Open edX Piral Shell Home Page at '/'. This page is generated
+      inside of a pilet that also generates the overall 'layout' of pages in this
+      shell. Currently, both layout and content come from the same pilet, but 
+      this can be further separated.  
+    </p>
+    <ul>
+      <li>Go to <Link to="/account">Account MFE</Link>.</li>
+      <li>Go to <Link to="/learning">Learning MFE</Link>.</li>
+      <li>Switch to an <a href="/?alt=layout">Alternative Layout</a>.</li>
+      <li>Switch to an <a href="/?alt=footer">Alternative Footer</a>.</li>
+      <li>Switch both <a href="/?alt=layout,footer">Alternative Layout and Footer</a>.</li>
+    </ul>
   </div>
 );
 

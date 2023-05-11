@@ -47,10 +47,23 @@ export const OpenEdxErrorInfo = (props) => (
 );
 const Home = () => (
   <div style={{margin:'1em'}}>
-    <p>This is the Shell Home Page at '/'. Ideally a pilet takes this over one day</p>
-    <p>Go to <Link to="/account">Account MFE</Link>.</p>
-    <p>Go to <Link to="/learning">Learning MFE</Link>.</p>
-  </div>
+    <p>This is the Shell Home Page for an alternative Layout. Note the 
+    sidebar and different content on this page. Both the overall layout
+    template and cotent of individual pages can be modified by simply
+    using different pilets to define the layout. No changes required to 
+    any existing MFEs. Note how the sidebar will persist even when the links
+    below are activated.</p>
+    <ul>
+      <li>Go to <Link to="/account">Account MFE</Link>.</li>
+      <li>Go to <Link to="/learning">Learning MFE</Link>.</li>
+    </ul>
+    <p>Continue exploring layout capabilities:</p>
+    <ul>
+      <li>Switch back to the <a href="/">Original Layout</a>.</li>
+      <li>Switch to an <a href="/?alt=layout,footer">Alternative Footer</a>.</li>
+      <li>Switch back to the <a href="/?alt=layout">Original Footer</a>.</li>
+    </ul>
+    </div>
 );
 
 
