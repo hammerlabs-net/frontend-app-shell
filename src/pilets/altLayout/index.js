@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom'; 
+import { Link, NavLink, Redirect } from 'react-router-dom'; 
 
 import { Helmet } from 'react-helmet';
 import { getConfig } from '@edx/frontend-platform';
@@ -12,7 +12,7 @@ import './style.scss'
 const Head = () => (
   <Helmet>
     <title>
-      Piral Open Edx Prototype
+      Open edX Piral Prototype
     </title>
     <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
   </Helmet>
@@ -24,8 +24,14 @@ const OpenEdxLayout = ({ children, Header, Footer}) => (
     <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>
       <Header />
         <div className="d-flex flex-row flex-grow-1">
-          <nav style={{ width: '100px' , background: 'grey'}}>
-            <div style={{margin: '10px'}}>Alternative Layout Sidebar could go here</div></nav>
+          <nav style={{ width: '100px' , background: '#BBBBBB'}}>
+            <NavLink 
+              style={{padding:'2px',border:'1px solid #333333', color:'#333333',display:'block'}} to='/account'>Account</NavLink>
+            <NavLink 
+              style={{padding:'2px',border:'1px solid #333333', color:'#333333',display:'block'}} to='/learning'>Learning</NavLink>
+            <NavLink 
+              style={{padding:'2px',border:'1px solid #333333',color:'#333333',display:'block', font:'small'}} to='/learning/course/course-v1:edX+DemoX+Demo_Course/home'>- course</NavLink>
+            <div style={{margin: '10px'}}>Alternative Layout Sidebar</div></nav>
           <main className="flex-grow-1">
             {children}
           </main>

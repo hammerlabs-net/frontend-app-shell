@@ -12,7 +12,7 @@ import './style.scss'
 const Head = () => (
   <Helmet>
     <title>
-      Piral Open Edx Prototype
+      Open edX Piral Prototype
     </title>
     <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
   </Helmet>
@@ -34,7 +34,7 @@ const OpenEdxLayout = ({ children, Header, Footer}) => (
 
 
 export const OpenEdxErrorInfo = (props) => (
-  <div>
+  <div style={{padding:'1em'}}>
     <h1>Error</h1>
     <div className="error-container">
       <SwitchErrorInfo {...props} />
@@ -42,7 +42,7 @@ export const OpenEdxErrorInfo = (props) => (
   </div>
 );
 const Home = () => (
-  <div>
+  <div style={{padding:'1em'}}>
     <p>
       This is the Open edX Piral Shell Home Page at '/'. This page is generated
       inside of a pilet that also generates the overall 'layout' of pages in this
@@ -62,7 +62,7 @@ const Home = () => (
 
 const errors = {
   not_found: () => (
-    <div>
+    <div style={{padding:'1em'}}>
       <p className="error">Could not find the requested page. Are you sure it exists?</p>
       <p>
         Go back <Link to="/">Home</Link>.
