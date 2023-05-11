@@ -9,6 +9,8 @@ The `frontend-app-shell` repository is a proof of concept for decomposing Open e
 
 ## Running
 ### tl;dr:
+**Make sure you have Open edX [devstack](https://github.com/openedx/devstack) with lms running before trying this**
+
 Run the following shell commands in an empty directory:
 ```
 git clone https://github.com/hammerlabs-net/frontend-app-account.git && cd frontend-app-account/
