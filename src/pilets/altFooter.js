@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import Header from '@edx/frontend-component-header';
-
 const piletSpec = {
-  name: 'openEdx Header',
+  name: 'openEdx Footer',
   version: '1.0.0',
   spec: 'v2',
   dependencies: {},
   config: {},
   basePath: '/pilets',
   setup(piralApi) {
-    piralApi.registerExtension('openedx-header', () => (
-      <Header />
+    piralApi.registerExtension('openedx-footer', () => (
+      <div align="center">
+        This is an alternative footer extension.
+      </div>
     ));
   },
 
