@@ -48,9 +48,10 @@ module.exports = {
 npm install && npm start
 ```
 ### Detailed instructions
-Clone all four repositories to a common parent directory. After cloning, switch all the forked repositories above to their respective `pilet-convert` branches.
+Clone all four repositories to a common parent directory. After cloning:
 
-1. Run `npm install && npm run build` in all three MFE forked projects.
+1. Switch `frontend-app-account`, `frontend-app-learning` and `frontend-component-header` to their respective `pilet-convert` branches.
+1. Run `npm install && npm run build` for those 3 projects.
 2. Run `npm istall` in frontend-platform
 3. Add a file `module.config.js` to the root of this project with the following content:
 
