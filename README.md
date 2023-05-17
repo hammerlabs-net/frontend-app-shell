@@ -1,11 +1,12 @@
 # frontend-app-shell
 
-The `frontend-app-shell` repository is a proof of concept for decomposing Open edX Micro Frontends (MFEs) into pilets that can be loaded into a [Piral](https://piral.io) shell service. This project requires four additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and a fork of an Open edX component project to show single page routing between MFEs. It also depends on a Fork of Open edX frontend-platform
+The `frontend-app-shell` repository is a proof of concept for decomposing Open edX Micro Frontends (MFEs) into 'pilets' that can be loaded into a [Piral](https://piral.io) shell service. The context for this proof of concept can be found in [OEP-XXXX](https://github.com/openedx/open-edx-proposals/blob/426f6e09ffe615e77aa9205281d77012385a08d4/oeps/architectural-decisions/oep-XXXX-modular-micro-frontend-domains.rst#id1) and [FC-0007 Modular MFE Domains Discovery](https://openedx.atlassian.net/wiki/spaces/COMM/pages/3614900241/FC-0007+-+Modular+MFE+Domains+Discovery).
 
-- [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account)
-- [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning)
-- [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header)
-- [Frontend Platform Fork](https://github.com/hammerlabs-net/frontend-platform)
+## Overview
+
+This proof of concept demonstrates key features of Piral and how the framework can assist Open edX in continuing to promote modular frontend development while maintaining control over the platform architecture to support UI and UX consistency, modern single-page application design, optimized runtime builds, dependency management, and many other features that can greatly simplify MFE development by removing them from the set of concerns each MFE must implement separately. 
+
+The Goal of this POC is to provide a working example of an Open edX frontend deployed as a single page application that federates the account and learning MFE's seamlessly, and to act as a blueprint for future migration of additional MFEs to this paradigm.  
 
 ## Running
 ### tl;dr:
@@ -20,7 +21,7 @@ git checkout pilet-convert && npm install && npm run build && cd ..
 git clone https://github.com/hammerlabs-net/frontend-component-header.git && cd frontend-component-header/
 git checkout pilet-convert && npm install && npm run build && cd ..
 git clone https://github.com/hammerlabs-net/frontend-platform.git && cd frontend-platform
-npm install && cd ..
+git checkout develop && npm install && cd ..
 git clone https://github.com/hammerlabs-net/frontend-app-shell.git && cd frontend-app-shell
 echo "
 module.exports = {
@@ -50,11 +51,18 @@ module.exports = {
 npm install && npm start
 ```
 ### Detailed instructions
+This project requires four additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and a fork of an Open edX component project to show single page routing between MFEs. It also depends on a Fork of Open edX frontend-platform
+
+- [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account)
+- [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning)
+- [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header)
+- [Frontend Platform Fork](https://github.com/hammerlabs-net/frontend-platform)
+
 Clone all four repositories to a common parent directory. After cloning:
 
-1. Switch `frontend-app-account`, `frontend-app-learning` and `frontend-component-header` to their respective `pilet-convert` branches.
-1. Run `npm install && npm run build` for those 3 projects.
-2. Run `npm istall` in frontend-platform
+1. Switch `frontend-app-account`, `frontend-app-learning` and `frontend-component-header` to their respective `pilet-convert` branches, and switch `frontend-platform` to its `develop` branch.
+1. Run `npm install && npm run build` for `frontend-app-account`, `frontend-app-learning` and `frontend-component-header`.
+2. Run `npm install` for `frontend-platform`
 3. Add a file `module.config.js` to the root of this project with the following content:
 
 ```
@@ -86,10 +94,6 @@ module.exports = {
 4. Run `npm install` on this project.
 5. Run `npm start`.
 6. Access the running instance at http://localhost:1234/
-
-## Details
-
-This proof of concept demonstrates some key features of Piral and how the framework can assist Open edX in continuing to promote modular frontend development while maintaining control over the platform architecture to support UI and UX consistency, modern single-page application design, optimized runtime builds, dependency management, and many other features that can greatly simplify MFE development by removing them from the set of concerns each MFE must implement separately. 
 
 ### Key features:
 
