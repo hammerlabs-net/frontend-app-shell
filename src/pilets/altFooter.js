@@ -9,7 +9,7 @@ const messages = {
 
 
 const piletSpec = {
-  name: 'openEdx Footer',
+  name: 'openEdx Footer A',
   version: '1.0.0',
   spec: 'v2',
   dependencies: {},
