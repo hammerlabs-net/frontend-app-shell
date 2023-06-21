@@ -1,7 +1,7 @@
 // Converted Open edX MFEs and components
-import AccountMFEPilet from '@edx/frontend-app-account';
-import LearningMFEPilet from '@edx/frontend-app-learning';
-import { Pilet as HeaderPilet } from '@edx/frontend-component-header';
+//import AccountMFEPilet from './account';
+//import LearningMFEPilet from './learning';
+//import HeaderPilet from './header';
 
 /* Customizing Pilet loading
  *
@@ -22,19 +22,18 @@ import { Pilet as HeaderPilet } from '@edx/frontend-component-header';
  * alt=layout,footer
  */
 // Footer Extension Pilets that can be switched dynamically based on URL
-import OpenEdxFooterPilet from './footer';
-import AltFooterPilet from './altFooter';
+//import OpenEdxFooterPilet from './footer';
+//import AltFooterPilet from './altFooter';
 
 // Layout Pilets that can be switched dynamically based on URL
 import RegLayoutPilet from './layout';
 import AltLayoutPilet from './altLayout';
+import AltFooterPilet from './altFooter';
 
 const queryParams = new URLSearchParams(window.location.search);
 const useAlt = queryParams.get("alt")?.split(",");
 const LayoutPilet = useAlt && useAlt.indexOf('layout') != -1 ? AltLayoutPilet : RegLayoutPilet;
-const FooterPilet = useAlt && useAlt.indexOf('footer') != -1 ? AltFooterPilet : OpenEdxFooterPilet;
 
-// This is contrived. In a normal deployment, a more robust strategy can be employed
-// to define the list of available pilets for the piral shell to load. Piral recommends
-// a feed service, but config files are also possible. 
-export const pilets = [ HeaderPilet, FooterPilet, AccountMFEPilet, LearningMFEPilet, LayoutPilet ];
+
+
+export const pilets = [LayoutPilet, AltFooterPilet];

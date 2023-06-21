@@ -1,4 +1,20 @@
 const path = require('path');
+const { createConfig } = require('@edx/frontend-build');
+
+const config =  createConfig('webpack-piral', {
+  entry: {
+    app: path.resolve(process.cwd(), './src/index.html'),
+  },
+});
+
+delete config.output;
+
+console.log(config);
+
+module.exports = config;
+/*
+
+const path = require('path');
 const { merge } = require('webpack-merge');
 
 const platformConfig = require('@edx/frontend-build/config/webpack.dev.config');
@@ -10,13 +26,6 @@ const config = {
   
 };
 
-/* We need a slimmed version of webpack.dev.config.js 
- * specifically, we don't need the HTMLWebpackPlugin as Piral
- * emits index.jsx for us. We also don't need devServer since
- * Piral doing that for us. 
- * Modules are interfering with Piral's codegen. I have not
- * investigated too deeply yet. 
- */
 platformConfig.plugins.shift();
 
 delete platformConfig.devServer;
@@ -29,3 +38,4 @@ console.log(merged);
 
 module.exports = merged;
 
+*/
