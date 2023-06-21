@@ -3,7 +3,7 @@ import * as React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 const messages = {
   'en': {
-    "foot.message": 'This pilet shows how to load pilet messages via the API extensions.'
+    "foot.message": 'Alternative Footer pilet.'
   },
 };
 
@@ -17,7 +17,7 @@ const piletSpec = {
   basePath: '/pilets',
   setup(piralApi) {
     piralApi.mergeMessages(messages);
-    piralApi.registerExtension('openedx-footer',  
+    piralApi.registerExtension('openedx-footer.a',  
       injectIntl(() => (
         <div style={{textAlign:'center',backgroundColor:'grey',border:'5px solid red'}}>
           <p><FormattedMessage id='foot.message' /></p>

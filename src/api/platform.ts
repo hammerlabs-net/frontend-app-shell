@@ -1,5 +1,12 @@
 import { PiralPlugin } from 'piral-core';
-import { mergeMessages as platformMergeMessages, mergeConfig as platformMergeConfig, getConfig as platformGetConfig } from '@edx/frontend-platform'
+import { 
+  mergeMessages as platformMergeMessages, 
+  mergeConfig as platformMergeConfig, 
+  getConfig as platformGetConfig,
+  getAuthenticatedUser as platformGetAuthenticatedUser,
+  ensureConfig as platformEnsureConfig
+
+} from '@edx/frontend-platform'
 import { MessageDescriptor } from '@formatjs/intl';
 
 
@@ -16,11 +23,17 @@ interface PlatformApi {
  */
 export function createPlatformApi(): PiralPlugin<PlatformApi> {
   return (context) => (api) => ({
-    mergeConfig(config, key) {
-      platformMergeConfig(config, key);
+    ensureConfig() {
+      platformEnsureConfig();
     },
     getConfig() {
       return platformGetConfig();
+    },
+    mergeConfig(config, key) {
+      platformMergeConfig(config, key);
+    },
+    getAuthenticatedUser() {
+      return platformGetAuthenticatedUser();
     },
     mergeMessages(messages) {
       platformMergeMessages(messages);

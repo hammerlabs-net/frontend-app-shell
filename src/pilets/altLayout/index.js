@@ -98,7 +98,7 @@ export default {
       Layout: (({piral, children}) =>
         <OpenEdxLayout
           Header={() => <piral.Extension name='openedx-header'/>}
-          Footer={() => <piral.Extension name='openedx-footer'/>}>
+          Footer={() => <piral.Extension name='openedx-footer.a'/>}>
           {children}
         </OpenEdxLayout>
       ),

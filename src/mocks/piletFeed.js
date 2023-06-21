@@ -1,38 +1,68 @@
 const fs = require('fs');
 const path = require('path');
 
-const footer = {
-  source : '../frontend-component-footer/dist',
-  target: '/assets/pilets/frontend-component-footer/v1.0.0',
-  spec  : {
-    name: 'openEdx Footer',
-    version: '1.0.0',
-    spec: 'v2',
-    dependencies: {},
-    config: {},
-    custom: {},
-    requireRef: 'webpackChunkpr_edxfrontendcomponentfooter',
-    link: '/assets/pilets/frontend-component-footer/v1.0.0/index.js'
+const pilets = {
+  footer: {
+    source : '../frontend-component-footer/dist',
+    target: '/assets/pilets/frontend-component-footer/v1.0.0',
+    spec  : {
+      name: 'openEdx Footer',
+      version: '1.0.0',
+      spec: 'v2',
+      dependencies: {},
+      config: {},
+      custom: {},
+      requireRef: 'webpackChunkpr_edxfrontendcomponentfooter',
+      link: '/assets/pilets/frontend-component-footer/v1.0.0/index.js'
+    }
+  },
+  header: {
+    source : '../frontend-component-header/dist',
+    target: '/assets/pilets/frontend-component-header/v1.0.0',
+    spec  : {
+      name: 'openEdx Header',
+      version: '1.0.0',
+      spec: 'v2',
+      dependencies: {},
+      config: {},
+      custom: {},
+      requireRef: 'webpackChunkpr_frontendcomponentheader',
+      link: '/assets/pilets/frontend-component-header/v1.0.0/index.js'
+    }
+  },
+  account: {
+    source : '../frontend-app-account/dist',
+    target: '/assets/pilets/frontend-app-account/v1.0.0',
+    spec  : {
+      name: 'openEdx Account MFE',
+      version: '1.0.0',
+      spec: 'v2',
+      dependencies: {},
+      config: {},
+      custom: {},
+      requireRef: 'webpackChunkpr_frontendappaccount',
+      link: '/assets/pilets/frontend-app-account/v1.0.0/index.js'
+    }
+  },
+  learning: {
+    source : '../frontend-app-learning/dist',
+    target: '/assets/pilets/frontend-app-learning/v1.0.0',
+    spec  : {
+      name: 'openEdx Learning MFE',
+      version: '1.0.0',
+      spec: 'v2',
+      dependencies: {},
+      config: {},
+      custom: {},
+      requireRef: 'webpackChunkpr_frontendapplearning',
+      link: '/assets/pilets/frontend-app-learning/v1.0.0/index.js'
+    }
   }
-};
-
-const foo = {
-  source : '../frontend-component-foo/dist',
-  target: '/assets/pilets/frontend-component-foo/v1.0.0',
-  spec  : {
-    name: 'openEdx Foo',
-    version: '1.0.0',
-    spec: 'v2',
-    dependencies: {},
-    config: {},
-    custom: {},
-    requireRef: 'webpackChunkpr_frontendcomponentfoo',
-    link: '/assets/pilets/frontend-component-foo/v1.0.0/index.js'
-  }
+  
 }
 
-const pilets = {
-  items: [footer.spec, foo.spec]
+const piletFeed = {
+  items: [pilets.footer.spec, pilets.header.spec]
 }
 
 const targets = {
@@ -43,10 +73,13 @@ const headers = {
   'content-type': 'application/json',
 };
 
-function returnFile(fileSource, req, res) {
-  const file =path.resolve(process.cwd(), fileSource);
+function getFile(pilet, req, res) {
+  //match last part of url, split out of request vars
+  let file = req.url.match(/\/[^\/]+$/)[0].split('?')[0] || "index.js"
+  file = path.resolve(process.cwd(), pilet.source + file);
+
   return new Promise((resolve, reject) => {
-    fs.readFile(path.resolve(process.cwd(), fileSource), 'utf8', (err, data) => {
+    fs.readFile(path.resolve(process.cwd(), file), 'utf8', (err, data) => {
       if (err) {
         console.error(err);
         reject(res({
@@ -66,22 +99,26 @@ function returnFile(fileSource, req, res) {
 
 module.exports = function(_, req, res) {
   try {
-
     if (req.url === '/api/v1/feed/lms') { 
       return res({
         headers,
-        content: JSON.stringify(pilets),
+        content: JSON.stringify(piletFeed),
       });
-    } else if (req.url.includes(footer.target)) {
-      let file = req.url.match(/\/[^\/]+$/)[0] || "index.js"
-      file = file.split('?')[0];
-      return returnFile(footer.source + file, req, res)      
-    } else if (req.url.includes(foo.target)) {
-      let file = req.url.match(/\/[^\/]+$/)[0] || "index.js"
-      file = file.split('?')[0];
-      return returnFile(foo.source + file, req, res)      
-  
+
+    } else {
+      const keys = Object.keys(pilets);
+      var filePromise; 
+      for (var i=0; i<keys.length; i++) {
+        const key = keys[i];
+        const pilet = pilets[key];
+        if (req.url.includes(pilet.target)) {
+          filePromise = getFile(pilet, req, res);
+          break;
+        }
+      }
     }
+    return filePromise;
+    
   } catch (e) {
     console.log(e);
   }
