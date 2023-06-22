@@ -13,6 +13,8 @@ import { MessageDescriptor } from '@formatjs/intl';
 interface PlatformApi {
   mergeMessages(messages: Array<MessageDescriptor>): void;
   mergeConfig(config: Object, key: String): void;
+  getAuthenticatedUser(): Object; 
+  getConfig(): Object;
 }
 
 /**
