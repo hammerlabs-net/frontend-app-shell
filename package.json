@@ -28,7 +28,7 @@
     "webpack-merge": "^5.8.0"
   },
   "scripts": {
-    "start": "npm install ../frontend-build && piral debug",
+    "start": "npm piral debug",
     "build": "piral build --type emulator",
     "postinstall": "piral declaration"
   },
