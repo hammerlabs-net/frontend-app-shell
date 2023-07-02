@@ -24,8 +24,7 @@
     "redux-dynamic-modules": "^5.2.3",
     "redux-dynamic-modules-saga": "^5.2.3",
     "redux-dynamic-modules-thunk": "^5.2.3",
-    "redux-logger": "3.0.6",
-    "webpack-merge": "^5.8.0"
+    "redux-logger": "3.0.6"
   },
   "scripts": {
     "start": "piral debug",
@@ -35,19 +34,28 @@
   "app": "./src/index.html",
   "types": "dist/index.d.ts",
   "importmap": {
-    "imports": {},
+    "imports": {
+      "@edx/frontend-platform": ".",
+      "@edx/paragon": ".",
+      "@edx/browserslist-config": ".",
+      "react": ".",
+      "react-dom": ".",
+      "react-helmet": ".",
+      "react-router": ".",
+      "react-router-dom": "."
+    },
     "inherit": [
-      "piral-base",
-      "piral-core"
+      "piral-base"
     ]
   },
   "devDependencies": {
-    "@edx/browserslist-config": "^1.1.1",
     "@edx/frontend-build": "file:../frontend-build",
+    "@edx/browserslist-config": "^1.1.1",
     "@edx/reactifex": "1.1.0",
     "piral-cli": "1.0.1",
     "piral-cli-dotenv": "^0.2.0",
     "piral-cli-webpack5": "1.0.1",
-    "reactifex": "1.1.1"
+    "reactifex": "1.1.1",
+    "webpack-merge": "^5.8.0"
   }
 }

@@ -86,7 +86,6 @@ subscribe(APP_READY, () => {
       routes: {
         '/embed': Page,
       },
-      provider: ({children}) => <AppProvider store ={store}> {children} </AppProvider>
     },
     plugins: [
       createLayoutApi(),
@@ -103,7 +102,9 @@ subscribe(APP_READY, () => {
   
   /* Render the Piral Instance inside the Open edX AppProvider */ 
   ReactDOM.render(
-    <Piral instance={instance} />,
+    <AppProvider store ={store}>
+      <Piral instance={instance} />
+    </AppProvider>,
     document.querySelector('#root')
   );
 });

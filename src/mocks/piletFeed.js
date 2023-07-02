@@ -62,7 +62,7 @@ const pilets = {
 }
 
 const piletFeed = {
-  items: [pilets.footer.spec, pilets.header.spec]
+  items: [pilets.footer.spec, pilets.header.spec, pilets.account.spec, pilets.learning.spec]
 }
 
 const targets = {
@@ -87,7 +87,6 @@ function getFile(pilet, req, res) {
           content: err,
         }));
       }
-      console.log (data); 
       resolve(res({
         headers,
         content: data,

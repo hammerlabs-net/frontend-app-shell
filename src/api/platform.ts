@@ -3,10 +3,18 @@ import {
   mergeMessages as platformMergeMessages, 
   mergeConfig as platformMergeConfig, 
   getConfig as platformGetConfig,
-  getAuthenticatedUser as platformGetAuthenticatedUser,
   ensureConfig as platformEnsureConfig
 
-} from '@edx/frontend-platform'
+} from '@edx/frontend-platform';
+import {  
+  getAuthenticatedUser as platformGetAuthenticatedUser,
+  getAuthenticatedHttpClient as platformGetAuthenticatedHttpClient,
+} from '@edx/frontend-platform/auth';
+import { 
+  logInfo as platformLogInfo,
+  logError as platformLogError
+} from '@edx/frontend-platform/logging';
+
 import { MessageDescriptor } from '@formatjs/intl';
 
 
@@ -14,7 +22,10 @@ interface PlatformApi {
   mergeMessages(messages: Array<MessageDescriptor>): void;
   mergeConfig(config: Object, key: String): void;
   getAuthenticatedUser(): Object; 
+  getAuthenticatedHttpClient(): Object;
   getConfig(): Object;
+  logInfo(error: Object): void;
+  logError(error: Object): void; 
 }
 
 /**
@@ -37,8 +48,17 @@ export function createPlatformApi(): PiralPlugin<PlatformApi> {
     getAuthenticatedUser() {
       return platformGetAuthenticatedUser();
     },
+    getAuthenticatedHttpClient() {
+      return platformGetAuthenticatedHttpClient();
+    },
     mergeMessages(messages) {
       platformMergeMessages(messages);
     },
+    logInfo(error) { 
+      platformLogInfo(error);
+    },
+    logError(error) { 
+      platformLogError(error);
+    }
   });
 }
