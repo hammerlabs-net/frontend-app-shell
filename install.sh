@@ -23,7 +23,23 @@ git checkout develop && npm install && npm run build && cd ..
 git clone https://github.com/hammerlabs-net/frontend-lib-special-exams.git && cd frontend-lib-special-exams
 git checkout develop && npm install && npm run build && cd ..
 
-cd $PIRAL_DIR && npm install && npm run build && cd ..
+cd $PIRAL_DIR
+echo "
+module.exports = {
+  localModules: [
+    {
+      moduleName: '@edx/frontend-platform',
+      dir: '../frontend-platform', 
+      dist: 'dist',
+    },
+    {
+      moduleName: '@edx/frontend-build',
+      dir: '../frontend-build', 
+    },
+  ]
+};
+" > module.config.js
+npm install && npm run build && cd ..
 
 git clone https://github.com/hammerlabs-net/frontend-component-footer.git && cd frontend-component-footer && git checkout develop
 echo "
