@@ -14,7 +14,9 @@ The Goal of this POC is to provide a working example of an Open edX frontend dep
 
 Run the following shell commands in an empty directory:
 ```
-git clone https://github.com/hammerlabs-net/frontend-app-shell.git && cd frontend-app-shell && git checkout develop
+git clone https://github.com/hammerlabs-net/frontend-app-shell.git
+cd frontend-app-shell
+git checkout develop
 ./install.sh
 npm start
 ```
