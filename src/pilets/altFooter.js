@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
 const messages = {
   'en': {
     "foot.message": 'Alternative Footer pilet.'
