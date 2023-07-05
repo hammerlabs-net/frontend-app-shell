@@ -1,3 +1,11 @@
+/**
+ * Piral Plugin to expose Open edX Frontend-platform methods. 
+ * This helps us decouple MFE initialization from the platform 
+ * initialization which is now done during Piral instantiation, not
+ * MFE (pilet) instantiation. It also exposes authentication and 
+ * configuration endpoints to MFEs. 
+ */
+
 import { PiralPlugin } from 'piral-core';
 import { 
   mergeMessages as platformMergeMessages, 
@@ -28,12 +36,6 @@ interface PlatformApi {
   logError(error: Object): void; 
 }
 
-/**
- * Plugin functions to expose Open edX Frontend-platform methods. 
- * This helps us decouple MFE initialization from the platform 
- * initialization which is now done during Piral instantiation, not
- * MFE (pilet) instantiation
- */
 export function createPlatformApi(): PiralPlugin<PlatformApi> {
   return (context) => (api) => ({
     ensureConfig() {

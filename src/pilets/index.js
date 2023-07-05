@@ -1,29 +1,12 @@
-// Converted Open edX MFEs and components
-//import AccountMFEPilet from './account';
-//import LearningMFEPilet from './learning';
-//import HeaderPilet from './header';
-
 /* Customizing Pilet loading
  *
- * Below we see two methods to dynamically swap UI elements via
- * a pilet loading strategy.
+ * This shows a simple strategy to dynamically swap UI elements via url queries.
  * 
- * In the first example, we load two alternative footer pilets. These pilets
- * are extensions that satisfy the slot 'openedx-footer'. Both layouts below
- * declare a 'openedx-footer' slot. The urlswith alt=footer will dynamically
- * switch between which footer is loaded to fill the slot.
+ * We use the alt=layout url query to determine which Layout Pilet to load. The Alt
+ * pilet will make use of the alt footer pilet instead of the normal OpenEdx Footer
+ * component, by defining a different extension slot that the alt-footer can fill. 
  * 
- * In the second example, an entirely different layout is loaded, allowing a lot
- * more flexibility over the DOM, including adding an entirely new sidebar. The 
- * urlswitch alt=layout will activate this alternative layout. 
- * 
- * Note that both switches can be combined. 
- * 
- * alt=layout,footer
  */
-// Footer Extension Pilets that can be switched dynamically based on URL
-//import OpenEdxFooterPilet from './footer';
-//import AltFooterPilet from './altFooter';
 
 // Layout Pilets that can be switched dynamically based on URL
 import RegLayoutPilet from './layout';

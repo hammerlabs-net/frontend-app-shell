@@ -2,27 +2,27 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
-// Piral
+// Piral and Piral API extensions for OpenEdx
 import { createInstance, Piral } from 'piral-core';
 import { createLayoutApi, createPlatformApi } from './api';
 
-// OpenEdx
+// OpenEdx Frontend-platform
 import { subscribe, initialize, APP_READY, APP_INIT_ERROR, } from '@edx/frontend-platform';
 import { AppProvider, ErrorPage } from '@edx/frontend-platform/react';
 
-// Pilets
+// Statically defined Pilets for test purposes 
 import { pilets as availablePilets } from './pilets';
-//import  PiralProvider  from './PiralProvider';
 
 // Redux
 import { applyMiddleware } from 'redux';
 import { createStore } from 'redux-dynamic-modules';
 import { composeWithDevTools } from 'redux-devtools-extension';
-
 import { createLogger } from 'redux-logger';
 import { getSagaExtension } from 'redux-dynamic-modules-saga';
 import { getThunkExtension } from 'redux-dynamic-modules-thunk';
 
+// Example Page to show how to define Shell routes. This page is defined
+// as route in the Piral instance declaration below.  
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 const messages = {
   'en': {
@@ -42,6 +42,7 @@ const Page = () => {
   );
 };
 
+
 // Open edX APP_READY handler. 
 subscribe(APP_READY, () => {
   /* Configure Redux
@@ -49,7 +50,7 @@ subscribe(APP_READY, () => {
    * In exisitng MFEs the Redux store is configured at creation time as the 
    * reducers and sagas are known to the application before hand. In the Piral
    * context, the shell is not aware of what reducers and sagas must be loaded.
-   * To support this, this POC uses Reduc Dynamic Modules in order to load 
+   * To support this, this POC uses Redux Dynamic Modules in order to load 
    * reducers and sagas when pilets's are loaded into the shell.
    */
     const loggerMiddleware =  composeWithDevTools(applyMiddleware(createLogger({
@@ -66,15 +67,16 @@ subscribe(APP_READY, () => {
   
   /* Create The Piral instance.
    * 
-   * We use and empty state instance as layout and error components 
-   * are handled in the LayoutApi plugin for the Piral API. This demonstrates the ability
-   * to use different pilets to control the UX Layout and other components
-   * of the user interface.
+   * We use and empty state instance (except for the route example below) as layout and error components
+   * are handled in the LayoutApi plugin (./api/layout.ts). This demonstrates the ability
+   * to control the UX Layout and other components of the user interface through pilets to achieve a highly
+   * custom look and feel.
    * 
    * The POC uses both statically defined pilets (availablePilets) as well as pilets defined
-   * in the mock Kras piletFeed service (./mocks/piletFeed.js). Piral typically 
-   * recommends a "feed service" that can load pilets dynamically at
-   * runtime. 
+   * in the mock Kras piletFeed service (./mocks/piletFeed.js). The layout pilets are statically loaded,
+   * while the converted OpenEdx MFE's are loaded via the Mock service. The mock service can be extended
+   * so that different Pilet configurations can be dynamically defined at build or runtime to satisfy
+   * alternative deployment models.
    */
   const instance = createInstance({
     async: true,
