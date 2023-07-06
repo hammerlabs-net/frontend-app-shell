@@ -17,7 +17,7 @@ Run the following shell commands in an empty directory:
 git clone https://github.com/hammerlabs-net/frontend-app-shell.git
 cd frontend-app-shell
 git checkout develop
-./install.sh
+npm run setup
 npm start
 ```
 ### Detailed instructions
