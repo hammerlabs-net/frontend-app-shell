@@ -83,11 +83,10 @@ async function processDependentRepo(repo) {
 const requiredNodeVersion = 'v18.14.0';
 
 async function verifyNodeVersion() {
-  const { has_nvm } = await exec('nvm use >/dev/null 2>&1 || echo fail');
+  const { has_nvm } = await exec('nvm use || echo fail');
   const { stdout } = await exec('node -v');
   const version = stdout.trim();
   if (version !== requiredNodeVersion) {
-    if ( has_nvm !== '') console.log(`nvm not found.`)
     console.log(`Node.js version ${requiredNodeVersion} is required.`);
     console.log(`Your current Node.js version is ${version}.`);
     process.exit(1);
