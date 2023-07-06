@@ -9,6 +9,9 @@ This proof of concept demonstrates key features of Piral and how the framework c
 The Goal of this POC is to provide a working example of an Open edX frontend deployed as a single page application that federates the account and learning MFE's seamlessly, and to act as a blueprint for future migration of additional MFEs to this paradigm.  
 
 ## Running
+
+Node.js version 18.14.0 is required for this prototype. This is not a permanent requirement and will change in the future. Please make sure you have nvm installed.
+
 ### tl;dr:
 **Make sure you have Open edX [devstack](https://github.com/openedx/devstack) with lms running before trying this**
 
@@ -17,6 +20,7 @@ Run the following shell commands in an empty directory:
 git clone https://github.com/hammerlabs-net/frontend-app-shell.git
 cd frontend-app-shell
 git checkout develop
+nvm use
 npm run setup
 npm start
 ```
@@ -33,7 +37,7 @@ This project requires 8 additional projects to be downloaded -  two forks of cur
 - [Paragon Fork](https://github.com/hammerlabs-net/paragon)
 
 Clone all repositories to a common parent directory including this repository. After cloning:
-
+0. Run `nvm use 18.14.0`
 1. Switch all forks to their `develop` branches.
 2. Run npm install in `frontend-build`
 3. Add a file `module.config.js` to the root of this repository, as well as to the root of `frontend-component-footer`, `frontend-component-header`, `frontend-app-account` and `frontend-app-learning`, with the following content:
