@@ -10,7 +10,7 @@ The Goal of this POC is to provide a working example of an Open edX frontend dep
 
 ## Running
 
-Node.js version 18.14.0 is required for this prototype. This is not a permanent requirement and will change in the future. Please make sure you have nvm installed.
+Node.js version 18.16.1 is required for this prototype. Other versions may work but they are untested. Please consider using nvm for easy compatibility. 
 
 ### tl;dr:
 **Make sure you have Open edX [devstack](https://github.com/openedx/devstack) with lms running before trying this**
@@ -25,44 +25,24 @@ npm run setup
 npm start
 ```
 ### Detailed instructions
-This project requires 8 additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, forks of two open edx component libraries for header and footer, and a special exams library. It also depends on forks of Open edX frontend-platform, and frontend-build in addtion to a fork of Paragon. 
+This project requires 4 additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and forks of two open edx component libraries for header and footer. The project also depends on minor forked version of lower level libraries below. Packages are available for these lower level libraries.
 
+#### Downstream MFE dependencies
 - [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account)
 - [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning)
 - [Footer Component Fork](https://github.com/hammerlabs-net/frontend-component-footer)
 - [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header)
+
+#### Upstream dependencies
 - [Special Exams Fork](https://github.com/hammerlabs-net/frontend-lib-special-exams)
 - [Frontend Platform Fork](https://github.com/hammerlabs-net/frontend-platform)
 - [Frontend Build Fork](https://github.com/hammerlabs-net/frontend-build)
 - [Paragon Fork](https://github.com/hammerlabs-net/paragon)
 
-Clone all repositories to a common parent directory including this repository. After cloning:
-0. Run `nvm use 18.14.0`
+Clone the MFE repositories to a common parent directory including this repository. After cloning:
+0. Run `nvm use 18.16.1`
 1. Switch all forks to their `develop` branches.
-2. Run npm install in `frontend-build`
-3. Add a file `module.config.js` to the root of this repository, as well as to the root of `frontend-component-footer`, `frontend-component-header`, `frontend-app-account` and `frontend-app-learning`, with the following content:
-
-```
-module.exports = {
-  localModules: [
-    {
-      moduleName: '@edx/frontend-platform',
-      dir: '../frontend-platform', 
-      dist: 'dist',
-    },
-    {
-      moduleName: '@edx/frontend-lib-special-exams',
-      dir: '../frontend-app-learning', 
-      dist: 'dist',
-    },
-    {
-      moduleName: '@edx/frontend-build',
-      dir: '../frontend-build', 
-    }
-  ]
-}
-```
-4. Run `npm install && npm run build` on all projects IN THIS ORDER: `paragon`, `frontend-platform`, `frontend-lib-special-exams`, `frontend-app-shell` (this project), `frontend-component-header`, `frontend-component-header`, `frontend-app-account`, `frontend-app-learning`  
+3. Run `npm install && npm run build` on all projects IN THIS ORDER:`frontend-app-shell` (this project), `frontend-component-header`, `frontend-component-header`, `frontend-app-account`, `frontend-app-learning`  
 6. Run `npm start` in this project.
 7. Access the running instance at http://localhost:1234/
 
