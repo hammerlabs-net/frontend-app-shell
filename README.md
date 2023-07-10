@@ -9,91 +9,42 @@ This proof of concept demonstrates key features of Piral and how the framework c
 The Goal of this POC is to provide a working example of an Open edX frontend deployed as a single page application that federates the account and learning MFE's seamlessly, and to act as a blueprint for future migration of additional MFEs to this paradigm.  
 
 ## Running
+
+Node.js version 18.16.1 is required for this prototype. Other versions may work but they are untested. Please consider using nvm for easy compatibility. 
+
 ### tl;dr:
 **Make sure you have Open edX [devstack](https://github.com/openedx/devstack) with lms running before trying this**
 
 Run the following shell commands in an empty directory:
 ```
-git clone https://github.com/hammerlabs-net/frontend-app-account.git && cd frontend-app-account/
-git checkout pilet-convert && npm install && npm run build && cd ..
-git clone https://github.com/hammerlabs-net/frontend-app-learning.git && cd frontend-app-learning/
-git checkout pilet-convert && npm install && npm run build && cd ..
-git clone https://github.com/hammerlabs-net/frontend-component-header.git && cd frontend-component-header/
-git checkout pilet-convert && npm install && npm run build && cd ..
-git clone https://github.com/hammerlabs-net/frontend-platform.git && cd frontend-platform
-git checkout develop && npm install && cd ..
-git clone https://github.com/hammerlabs-net/frontend-app-shell.git && cd frontend-app-shell
-echo "
-module.exports = {
-  localModules: [
-    {
-      moduleName: '@edx/frontend-app-account',
-      dir: '../frontend-app-account', 
-      dist: 'src',
-    },
-    {
-      moduleName: '@edx/frontend-platform',
-      dir: '../frontend-platform', 
-      dist: 'src',
-    },
-    {
-      moduleName: '@edx/frontend-app-learning',
-      dir: '../frontend-app-learning', 
-      dist: 'src',
-    },
-    {
-      moduleName: '@edx/frontend-component-header',
-      dir: '../frontend-component-header', 
-      dist: 'src',
-    }
-  ]
-}" > module.config.js
-npm install && npm start
+git clone https://github.com/hammerlabs-net/frontend-app-shell.git
+cd frontend-app-shell
+git checkout develop
+nvm use
+npm run setup
+npm start
 ```
 ### Detailed instructions
-This project requires four additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and a fork of an Open edX component project to show single page routing between MFEs. It also depends on a Fork of Open edX frontend-platform
+This project requires 4 additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and forks of two open edx component libraries for header and footer. The project also depends on minor forked version of lower level libraries below. Packages are available for these lower level libraries so there is no need to clone or build them locally. 
 
+#### Downstream MFE dependencies
 - [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account)
 - [Learning MFE Fork](https://github.com/hammerlabs-net/frontend-app-learning)
+- [Footer Component Fork](https://github.com/hammerlabs-net/frontend-component-footer)
 - [Header Component Fork](https://github.com/hammerlabs-net/frontend-component-header)
+
+#### Upstream dependencies
+- [Special Exams Fork](https://github.com/hammerlabs-net/frontend-lib-special-exams)
 - [Frontend Platform Fork](https://github.com/hammerlabs-net/frontend-platform)
+- [Frontend Build Fork](https://github.com/hammerlabs-net/frontend-build)
+- [Paragon Fork](https://github.com/hammerlabs-net/paragon)
 
-Clone all four repositories to a common parent directory. After cloning:
-
-1. Switch `frontend-app-account`, `frontend-app-learning` and `frontend-component-header` to their respective `pilet-convert` branches, and switch `frontend-platform` to its `develop` branch.
-1. Run `npm install && npm run build` for `frontend-app-account`, `frontend-app-learning` and `frontend-component-header`.
-2. Run `npm install` for `frontend-platform`
-3. Add a file `module.config.js` to the root of this project with the following content:
-
-```
-module.exports = {
-  localModules: [
-    {
-      moduleName: '@edx/frontend-app-account',
-      dir: '../frontend-app-account', 
-      dist: 'src',
-    },
-    {
-      moduleName: '@edx/frontend-platform',
-      dir: '../frontend-platform', 
-      dist: 'src',
-    },
-    {
-      moduleName: '@edx/frontend-app-learning',
-      dir: '../frontend-app-learning', 
-      dist: 'src',
-    },
-    {
-      moduleName: '@edx/frontend-component-header',
-      dir: '../frontend-component-header', 
-      dist: 'src',
-    }
-  ]
-}
-```
-4. Run `npm install` on this project.
-5. Run `npm start`.
-6. Access the running instance at http://localhost:1234/
+Clone the MFE repositories to a common parent directory including this repository. After cloning:
+0. Run `nvm use 18.16.1`
+1. Switch all forks to their `develop` branches.
+3. Run `npm install && npm run build` on all projects IN THIS ORDER:`frontend-app-shell` (this project), `frontend-component-header`, `frontend-component-header`, `frontend-app-account`, `frontend-app-learning`  
+6. Run `npm start` in this project.
+7. Access the running instance at http://localhost:1234/
 
 ### Key features:
 
