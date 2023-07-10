@@ -11,53 +11,14 @@ async function runShellCommand(cmd) {
   console.error(stderr);
 }
 
-const localModulesConfig = {
-  localModules: [
-    {
-      moduleName: '@edx/frontend-platform',
-      dir: '../frontend-platform', 
-      dist: 'dist',
-    },
-    {
-      moduleName: '@edx/frontend-build',
-      dir: '../frontend-build', 
-    },
-  ]
-};
-
-
 const repositories = [
-  'frontend-build',
-  'paragon',
-  'frontend-platform',
-  'frontend-lib-special-exams',
-];
-
-async function processRepo(repo) {
-  console.log(`Processing: ${repo}`);
-  const pathToRepo = path.resolve(shellDir, `../${repo}`);
-  if (fs.existsSync(pathToRepo)) {
-    console.log("Already Installed. Exiting");
-    process.exit(1);
-  }
-  process.chdir(parentDir);
-  await runShellCommand(`git clone https://github.com/hammerlabs-net/${repo}.git`);
-  process.chdir(pathToRepo);
-  await runShellCommand(`git checkout develop && npm install`);
-  if (repo !== 'frontend-build') {
-    await runShellCommand(`npm run build`);
-  }
-  process.chdir(shellDir);
-}
-
-const dependentRepositories = [
   'frontend-component-footer',
   'frontend-component-header',
   'frontend-app-account',
   'frontend-app-learning'
 ];
 
-async function processDependentRepo(repo) {
+async function processRepository(repo) {
   console.log(`Processing: ${repo}`);
   const pathToRepo = path.resolve(shellDir, `../${repo}`);
 
@@ -65,22 +26,12 @@ async function processDependentRepo(repo) {
   await runShellCommand(`git clone https://github.com/hammerlabs-net/${repo}.git`);
   process.chdir(pathToRepo);
   await runShellCommand(`git checkout develop && npm install`);
-  if (repo === 'frontend-app-learning') {
-    localModulesConfig.localModules.push(
-      { 
-        moduleName: '@edx/frontend-lib-special-exams', 
-        dir: '../frontend-lib-special-exams', 
-        dist: 'dist' 
-      },
-    )
-  }
-  fs.writeFileSync(`${pathToRepo}/module.config.js`, 'module.exports = ' + JSON.stringify(localModulesConfig, null, 2));
   await runShellCommand(`npm install && npm run build`);
   process.chdir(shellDir);
 }
 
 
-const requiredNodeVersion = 'v18.14.0';
+const requiredNodeVersion = 'v18.16.1';
 
 async function verifyNodeVersion() {
   const { stdout } = await exec('node -v');
@@ -96,12 +47,8 @@ async function verifyNodeVersion() {
 
 (async () => {
   await verifyNodeVersion();
-  for (const repo of repositories) {
-    await processRepo(repo);
-  }
-  fs.writeFileSync('module.config.js', 'module.exports = ' + JSON.stringify(localModulesConfig, null, 2));
   await runShellCommand(`npm install && npm run build`);
-  for (const repo of dependentRepositories) {
-    await processDependentRepo(repo);
+  for (const repo of repositories) {
+    await processRepository(repo);
   }
 })().catch(e => console.error(e));

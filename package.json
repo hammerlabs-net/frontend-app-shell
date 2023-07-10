@@ -5,16 +5,13 @@
   "keywords": [
     "piral"
   ],
-  "engines": {
-    "node": "18.14.0"
-  },
   "browserslist": [
     "extends @edx/browserslist-config"
   ],
   "dependencies": {
     "@edx/brand": "npm:@edx/brand-openedx@1.2.0",
-    "@edx/frontend-platform": "file:../frontend-platform/dist",
-    "@edx/paragon": "file:../paragon",
+    "@edx/frontend-platform": "npm:@hammerlabs-net/frontend-platform@1.0.0-alpha",
+    "@edx/paragon": "npm:@hammerlabs-net/paragon@1.0.0-alpha",
     "piral-base": "1.0.1",
     "piral-core": "1.0.1",
     "react": "^16.14.0",
@@ -39,8 +36,8 @@
   "types": "dist/index.d.ts",
   "importmap": {
     "imports": {
-      "@edx/frontend-platform": ".",
-      "@edx/paragon": ".",
+      "@edx/frontend-platform": "./node_modules/@edx/frontend-platform",
+      "@edx/paragon": "./node_modules/@edx/paragon",
       "@edx/browserslist-config": ".",
       "react": ".",
       "react-dom": ".",
@@ -53,7 +50,7 @@
     ]
   },
   "devDependencies": {
-    "@edx/frontend-build": "file:../frontend-build",
+    "@edx/frontend-build": "npm:@hammerlabs-net/frontend-build@1.0.0-alpha",
     "@edx/browserslist-config": "^1.1.1",
     "@edx/reactifex": "1.1.0",
     "piral-cli": "1.0.1",
