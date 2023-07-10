@@ -25,7 +25,7 @@ npm run setup
 npm start
 ```
 ### Detailed instructions
-This project requires 4 additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and forks of two open edx component libraries for header and footer. The project also depends on minor forked version of lower level libraries below. Packages are available for these lower level libraries.
+This project requires 4 additional projects to be downloaded -  two forks of current Open edX MFEs that show the conversion process for current MFEs to pilets, and forks of two open edx component libraries for header and footer. The project also depends on minor forked version of lower level libraries below. Packages are available for these lower level libraries so there is no need to clone or build them locally. 
 
 #### Downstream MFE dependencies
 - [Account MFE Fork](https://github.com/hammerlabs-net/frontend-app-account)
